@@ -5,3 +5,6 @@ CMakeFiles
 .vscode
 .cmake
 .idea
+cmake-build-debug
+
+build
