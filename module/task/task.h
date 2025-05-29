@@ -13,10 +13,23 @@ std::string get_time();
 class TASK {
 
 public:
-    TASK(std::string _des , int _id , std::string _cre_at) : description(_des) , id(_id) , createAt(_cre_at),currentState(TODO),updateAt(_cre_at) {
-        currentState = DONE;
-        // std::cout << "this point is :" << this << std::endl;
+    TASK(std::string _des , int _id , std::string _cre_at) : description(_des) , id(_id) , createAt(_cre_at){
+        currentState = State::TODO;
+        updateAt = _cre_at;
     };
+    TASK(
+        std::string _des , 
+        int _id , 
+        std::string _cre_at ,
+        std::string _up_at,
+        int state){
+
+        description = _des;
+        id = _id;
+        createAt = _cre_at;
+        updateAt = _up_at;
+        currentState = static_cast<State>(state);
+    }
     std::string get_description(){ return description; };
     std::string get_createAt(){return createAt; };
     std::string get_updateAt(){return updateAt; };
@@ -31,7 +44,7 @@ public:
             <<"  \"description\":\"" << this->description << "\",\n"
             <<"  \"createAt\":\"" << this->createAt << "\",\n"
             <<"  \"updateAt\":\"" << this->updateAt << "\" ,\n"
-            <<"  \"State\":\"" << this->currentState << "\" \n"
+            <<"  \"State\":\"" << static_cast<int>(this->currentState) << "\" \n"
             <<"}";
         return oss.str();
     }
@@ -42,7 +55,7 @@ public:
 private:
     std::string description;
     int id;
-    enum State{
+    enum class State{
         TODO,
         DONE,
         IN_PROGRESS
